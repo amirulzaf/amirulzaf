@@ -2,6 +2,7 @@ Hi I'm amirulzaf. Just finished my bachelor's degree in Computer Science majorin
 In this repository I will include some of my projects created by me. 
 I will put it in a easy to use manner for the use of other programmer.
 
+Any enquiries can email me at amirul.zafran5188@gmail.com
 
 The arrangement will be:
 1. Machine Learning Model (Fined tuned)
