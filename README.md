@@ -12,7 +12,7 @@ The arrangement will be:
    * Multilayer Perceptron
    * LeNet5
 
-2. Node-Red(IoT & AioT
+2. Node-Red(IoT & AioT)
    * PetFeeder
    * Smart sorting and defect detection on a conveyor belt
     
