@@ -1,0 +1,655 @@
+[
+    {
+        "id": "200cd36f.0997fc",
+        "type": "rpi-gpio in",
+        "z": "2f49fdd2.8de9c2",
+        "d": true,
+        "name": "PIR",
+        "pin": "17",
+        "intype": "tri",
+        "debounce": "25",
+        "read": true,
+        "bcm": true,
+        "x": 230,
+        "y": 340,
+        "wires": [
+            [
+                "ad02aa9f.067f28",
+                "fa94dc82.f3e2e",
+                "2ebf29b6.ba7556"
+            ]
+        ]
+    },
+    {
+        "id": "ad02aa9f.067f28",
+        "type": "debug",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fa94dc82.f3e2e",
+        "type": "usbcamera",
+        "z": "2f49fdd2.8de9c2",
+        "filemode": "1",
+        "filename": "Pet.jpg",
+        "filedefpath": "1",
+        "filepath": "/home/pi/Desktop/RealTimeSystem",
+        "fileformat": "jpeg",
+        "resolution": "2",
+        "name": "",
+        "x": 570,
+        "y": 220,
+        "wires": [
+            [
+                "f3f34c47.7bea2",
+                "2ed11d0b5c5070be",
+                "a98e2fb67acc4625"
+            ]
+        ]
+    },
+    {
+        "id": "2ebf29b6.ba7556",
+        "type": "trigger",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "op1": "20",
+        "op2": "5",
+        "op1type": "num",
+        "op2type": "num",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 540,
+        "y": 320,
+        "wires": [
+            [
+                "90f03cfc.bf366"
+            ]
+        ]
+    },
+    {
+        "id": "90f03cfc.bf366",
+        "type": "rpi-gpio out",
+        "z": "2f49fdd2.8de9c2",
+        "name": "Servo Motor",
+        "pin": "18",
+        "set": "",
+        "level": "0",
+        "freq": "50",
+        "out": "pwm",
+        "bcm": true,
+        "x": 910,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "1defb560.e891db",
+        "type": "rpi-gpio in",
+        "z": "2f49fdd2.8de9c2",
+        "d": true,
+        "name": "sensor",
+        "pin": "16",
+        "intype": "tri",
+        "debounce": "25",
+        "read": false,
+        "bcm": true,
+        "x": 170,
+        "y": 440,
+        "wires": [
+            [
+                "2ebf29b6.ba7556",
+                "fa94dc82.f3e2e"
+            ]
+        ]
+    },
+    {
+        "id": "88b7c049.26726",
+        "type": "rpi-gpio out",
+        "z": "2f49fdd2.8de9c2",
+        "d": true,
+        "name": "Servo Motor",
+        "pin": "18",
+        "set": "",
+        "level": "0",
+        "freq": "50",
+        "out": "pwm",
+        "bcm": true,
+        "x": 930,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "7a09eee1.995a9",
+        "type": "inject",
+        "z": "2f49fdd2.8de9c2",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 550,
+        "y": 680,
+        "wires": [
+            [
+                "88b7c049.26726"
+            ]
+        ]
+    },
+    {
+        "id": "a122d64a.024818",
+        "type": "inject",
+        "z": "2f49fdd2.8de9c2",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "50",
+        "payloadType": "num",
+        "x": 530,
+        "y": 820,
+        "wires": [
+            [
+                "88b7c049.26726"
+            ]
+        ]
+    },
+    {
+        "id": "6b755bca.934ef4",
+        "type": "inject",
+        "z": "2f49fdd2.8de9c2",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "75",
+        "payloadType": "num",
+        "x": 690,
+        "y": 880,
+        "wires": [
+            [
+                "88b7c049.26726"
+            ]
+        ]
+    },
+    {
+        "id": "aaf5f8c1.992ae8",
+        "type": "inject",
+        "z": "2f49fdd2.8de9c2",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "20",
+        "payloadType": "num",
+        "x": 530,
+        "y": 780,
+        "wires": [
+            [
+                "88b7c049.26726"
+            ]
+        ]
+    },
+    {
+        "id": "de22b63f.66c8f8",
+        "type": "inject",
+        "z": "2f49fdd2.8de9c2",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "10",
+        "payloadType": "num",
+        "x": 550,
+        "y": 740,
+        "wires": [
+            [
+                "88b7c049.26726"
+            ]
+        ]
+    },
+    {
+        "id": "dcb08b14.282518",
+        "type": "telegram receiver",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "bot": "fd75e090.4d715",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 200,
+        "y": 640,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7365e045.5bc1c",
+        "type": "telegram sender",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "bot": "fd75e090.4d715",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1470,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "adc89dd5.87d84",
+        "type": "telegram sender",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "bot": "fd75e090.4d715",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1070,
+        "y": 580,
+        "wires": [
+            [
+                "28cb64b5.384edc"
+            ]
+        ]
+    },
+    {
+        "id": "f4bf35ec.e57778",
+        "type": "inject",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.chatID",
+                "v": "310618835",
+                "vt": "str"
+            },
+            {
+                "p": "payload.type",
+                "v": "message",
+                "vt": "str"
+            },
+            {
+                "p": "payload.content",
+                "v": "HIIII",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 740,
+        "y": 620,
+        "wires": [
+            [
+                "f63cc702.6ab3d8"
+            ]
+        ]
+    },
+    {
+        "id": "28cb64b5.384edc",
+        "type": "debug",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1330,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "f63cc702.6ab3d8",
+        "type": "function",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "func": "\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 560,
+        "wires": [
+            [
+                "adc89dd5.87d84"
+            ]
+        ]
+    },
+    {
+        "id": "3ca4f3a5.489f7c",
+        "type": "telegram command",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "fd75e090.4d715",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 230,
+        "y": 1100,
+        "wires": [
+            [
+                "7e2342fc.73a6fc",
+                "86b83f88.f8a6d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7e2342fc.73a6fc",
+        "type": "debug",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "86b83f88.f8a6d",
+        "type": "function",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "func": "\nvar helpMessage = \"Welcome to the bot of Pet Feeder system \\r\\n\";\nhelpMessage += \"Your chat id is \" + msg. payload.chatId;\nhelpMessage += \"\\r\\n\";\nhelpMessage += \"You are welcome: \" +msg.originalMessage.from.username;\nhelpMessage +=\"\\r\\n\";\n\nmsg.payload.content = helpMessage;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 1100,
+        "wires": [
+            [
+                "2f1acbaf.d47a94"
+            ]
+        ]
+    },
+    {
+        "id": "2f1acbaf.d47a94",
+        "type": "telegram sender",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "bot": "fd75e090.4d715",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "483c6968.6fc328",
+        "type": "telegram command",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "command": "/view",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "fd75e090.4d715",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 230,
+        "y": 160,
+        "wires": [
+            [
+                "fa94dc82.f3e2e",
+                "90bef66a2f2b57a4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f3f34c47.7bea2",
+        "type": "debug",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "23cd85.585fb27c",
+        "type": "debug",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1470,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2ed11d0b5c5070be",
+        "type": "image",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "width": "240",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 780,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a98e2fb67acc4625",
+        "type": "delay",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 880,
+        "y": 220,
+        "wires": [
+            [
+                "f33728e89162b3b8"
+            ]
+        ]
+    },
+    {
+        "id": "38b5b548a6379c97",
+        "type": "function",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "func": "var payload = { \n    chatId: msg.originalMessage.from.id,//msg. payload.chatId, //310618835,\n    type: \"photo\",\n    caption: 'This is my test image',\n    content: \"/home/pi/Pictures/Pet.jpg\" };\n    \nreturn {payload};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 200,
+        "wires": [
+            [
+                "7365e045.5bc1c",
+                "23cd85.585fb27c"
+            ]
+        ]
+    },
+    {
+        "id": "f33728e89162b3b8",
+        "type": "file in",
+        "z": "2f49fdd2.8de9c2",
+        "name": "load image",
+        "filename": "/home/pi/Pictures/Pet.jpg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 900,
+        "y": 160,
+        "wires": [
+            [
+                "8586d674bce3b694",
+                "38b5b548a6379c97"
+            ]
+        ]
+    },
+    {
+        "id": "8586d674bce3b694",
+        "type": "image",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "width": "240",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 1100,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "90bef66a2f2b57a4",
+        "type": "debug",
+        "z": "2f49fdd2.8de9c2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "fd75e090.4d715",
+        "type": "telegram bot",
+        "botname": "PetFeederHome_bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false,
+        "credentials": {
+            "token": ""
+        }
+    }
+]
