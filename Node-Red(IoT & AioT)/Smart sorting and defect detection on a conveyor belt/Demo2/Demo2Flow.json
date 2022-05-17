@@ -1,0 +1,1025 @@
+[
+    {
+        "id": "28e796fd9d3590b4",
+        "type": "tab",
+        "label": "FYP DEMO 2",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9388afcac313fc2b",
+        "type": "rpi-gpio in",
+        "z": "28e796fd9d3590b4",
+        "name": "Prediction sensor",
+        "pin": "16",
+        "intype": "tri",
+        "debounce": "25",
+        "read": false,
+        "bcm": true,
+        "x": 280,
+        "y": 560,
+        "wires": [
+            [
+                "1404fdf193b98f9d"
+            ]
+        ]
+    },
+    {
+        "id": "9b242554ef197e59",
+        "type": "usbcamera",
+        "z": "28e796fd9d3590b4",
+        "filemode": "0",
+        "filename": "FYP.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "2",
+        "name": "",
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "b67e7721f7a23112",
+                "1234be789785e156"
+            ]
+        ]
+    },
+    {
+        "id": "b67e7721f7a23112",
+        "type": "image",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "width": "240",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 860,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "1234be789785e156",
+        "type": "teachable machine",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "mode": "online",
+        "modelUrl": "https://teachablemachine.withgoogle.com/models/Yo1hHMkRl/",
+        "localModel": "teachable_model",
+        "output": "best",
+        "activeThreshold": false,
+        "threshold": 80,
+        "activeMaxResults": false,
+        "maxResults": 3,
+        "passThrough": true,
+        "x": 830,
+        "y": 360,
+        "wires": [
+            [
+                "0d3420a14e6e7b46",
+                "1af12717b506a175",
+                "7f41d9b6d77699ef"
+            ]
+        ]
+    },
+    {
+        "id": "f7b6cd3ece37b8c6",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Servo Motor",
+        "pin": "18",
+        "set": "",
+        "level": "0",
+        "freq": "50",
+        "out": "pwm",
+        "bcm": true,
+        "x": 1490,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "cfda4dcd11996ff7",
+        "type": "change",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "tags.host",
+                "pt": "msg",
+                "to": "Pi",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "fields.Object",
+                "pt": "msg",
+                "to": "payload[0].class",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "fields.Score",
+                "pt": "msg",
+                "to": "payload[0].score",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$append(fields,tags)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1520,
+        "y": 1100,
+        "wires": [
+            [
+                "a4655aaa1e2795bf",
+                "3e7d4d2b45603b1b"
+            ]
+        ]
+    },
+    {
+        "id": "a4655aaa1e2795bf",
+        "type": "influxdb out",
+        "z": "28e796fd9d3590b4",
+        "influxdb": "c5d7e93ab51ff726",
+        "name": "Influx DB",
+        "measurement": "Predictions",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1840,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "2e730e116d4a3a55",
+        "type": "debug",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1450,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "63dd155aa58e15a3",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "\nvar helpMessage = \"Welcome to the bot of Sorting Detection System \\r\\n\";\nhelpMessage += \"Your chat id is \" + msg. payload.chatId;\nhelpMessage += \"\\r\\n\";\nhelpMessage += \"You are welcome: \" +msg.originalMessage.from.username;\nhelpMessage +=\"\\r\\n\";\n\nmsg.payload.content = helpMessage;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 1260,
+        "wires": [
+            [
+                "88ed58c5b7da42e5"
+            ]
+        ]
+    },
+    {
+        "id": "936e30cc821c6a36",
+        "type": "telegram command",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "1b018480918e5201",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1150,
+        "y": 1220,
+        "wires": [
+            [
+                "63dd155aa58e15a3",
+                "2e730e116d4a3a55"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "88ed58c5b7da42e5",
+        "type": "telegram sender",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "bot": "1b018480918e5201",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1550,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0d3420a14e6e7b46",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "for (let object of msg.payload) {\nif (object.class == 'Fresh Apple') {\n        \n    msg.payload.predict = msg.payload[0].score\n    break;\n    }\nelse if (object.class == 'Rotten Apple') {\n        \n    msg.payload.predict = msg.payload[0].score\n    break;\n    }\nelse if (object.class == 'Random') {\n        \n    msg.payload.predict = msg.payload[0].score\n    break;\n    }\nbreak;\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1320,
+        "y": 1100,
+        "wires": [
+            [
+                "cfda4dcd11996ff7"
+            ]
+        ]
+    },
+    {
+        "id": "3e7d4d2b45603b1b",
+        "type": "debug",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1810,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "4b132566511cabfe",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 1;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 740,
+        "wires": [
+            [
+                "410d210c3615821e"
+            ]
+        ]
+    },
+    {
+        "id": "2ebb136b8e1e886e",
+        "type": "delay",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 660,
+        "wires": [
+            [
+                "4b132566511cabfe",
+                "f8f5bfd658f8f9f3",
+                "092e575b83f6513f"
+            ]
+        ]
+    },
+    {
+        "id": "1404fdf193b98f9d",
+        "type": "trigger",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "op1": "1",
+        "op2": "",
+        "op1type": "num",
+        "op2type": "nul",
+        "duration": "5",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 440,
+        "y": 560,
+        "wires": [
+            [
+                "2ebb136b8e1e886e",
+                "9b242554ef197e59",
+                "00fe3e3cb7a5a2bd",
+                "992b469bcf5a98e8",
+                "58ee8a324ad25047",
+                "319d4260e3bd920f"
+            ]
+        ]
+    },
+    {
+        "id": "4d7eb15ca5878064",
+        "type": "telegram command",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "command": "/run",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "1b018480918e5201",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 1340,
+        "wires": [
+            [
+                "a5d966a9ec8cf09e",
+                "c16057a37ac0fd61",
+                "357cb3cd8b122cf4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2e0df3d584568714",
+        "type": "telegram command",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "command": "/pause",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "1b018480918e5201",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 1140,
+        "wires": [
+            [
+                "d707cf4c6a7302e7",
+                "55c07be9cf09426a",
+                "3c95b4a52045700f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f8f5bfd658f8f9f3",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 0;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 780,
+        "wires": [
+            [
+                "2f6d192c324b50e2"
+            ]
+        ]
+    },
+    {
+        "id": "092e575b83f6513f",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 50;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 820,
+        "wires": [
+            [
+                "d8715406a0dd6324"
+            ]
+        ]
+    },
+    {
+        "id": "919203415e919c45",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Speed (PWM)",
+        "pin": "13",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "pwm",
+        "bcm": true,
+        "x": 880,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "8bed9b8c7889b816",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Pin 1",
+        "pin": "5",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 850,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "b4fabbbf01cb1b23",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Pin 2",
+        "pin": "6",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 850,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "d8715406a0dd6324",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Speed (PWM)",
+        "pin": "13",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "pwm",
+        "bcm": true,
+        "x": 940,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "410d210c3615821e",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Pin 1",
+        "pin": "5",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 910,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "2f6d192c324b50e2",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Pin 2",
+        "pin": "6",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 910,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "7f0af8a528edfd11",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Speed (PWM)",
+        "pin": "13",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "pwm",
+        "bcm": true,
+        "x": 940,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "48e5d13cca0dbd5b",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Pin 1",
+        "pin": "5",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 910,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "7104c370cdb529e3",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Pin 2",
+        "pin": "6",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 910,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "00fe3e3cb7a5a2bd",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 0;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 520,
+        "wires": [
+            [
+                "48e5d13cca0dbd5b"
+            ]
+        ]
+    },
+    {
+        "id": "992b469bcf5a98e8",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 0;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 560,
+        "wires": [
+            [
+                "7104c370cdb529e3"
+            ]
+        ]
+    },
+    {
+        "id": "58ee8a324ad25047",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 50;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 600,
+        "wires": [
+            [
+                "7f0af8a528edfd11"
+            ]
+        ]
+    },
+    {
+        "id": "d707cf4c6a7302e7",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 0;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1120,
+        "wires": [
+            [
+                "8bed9b8c7889b816"
+            ]
+        ]
+    },
+    {
+        "id": "55c07be9cf09426a",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 0;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1160,
+        "wires": [
+            [
+                "b4fabbbf01cb1b23"
+            ]
+        ]
+    },
+    {
+        "id": "3c95b4a52045700f",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 50;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1200,
+        "wires": [
+            [
+                "919203415e919c45"
+            ]
+        ]
+    },
+    {
+        "id": "a5d966a9ec8cf09e",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 1;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1320,
+        "wires": [
+            [
+                "0bb71661bcead244"
+            ]
+        ]
+    },
+    {
+        "id": "c16057a37ac0fd61",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 0;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1360,
+        "wires": [
+            [
+                "9046a68d422cb269"
+            ]
+        ]
+    },
+    {
+        "id": "357cb3cd8b122cf4",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = msg.payload;\nmsg.payload = 50;\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1400,
+        "wires": [
+            [
+                "3926e651d56b4188"
+            ]
+        ]
+    },
+    {
+        "id": "3926e651d56b4188",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Speed (PWM)",
+        "pin": "13",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "pwm",
+        "bcm": true,
+        "x": 880,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "0bb71661bcead244",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Pin 1",
+        "pin": "5",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 850,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "9046a68d422cb269",
+        "type": "rpi-gpio out",
+        "z": "28e796fd9d3590b4",
+        "name": "Right Motor Pin 2",
+        "pin": "6",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 850,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "1af12717b506a175",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "let ObjectP = false;\n\nfor (let object of msg.payload) {\n    if (object.class == 'Fresh Apple') {\n        ObjectP = true;\n        if (ObjectP == true)\n        {\n            msg.payload = 4;\n            return msg;\n        }\n        break;\n    }\n    \n    else if (object.class == 'Rotten Apple') {\n        ObjectP = true;\n        if (ObjectP == true)\n        {\n            msg.payload = 5.5;\n            return msg;\n        }\n        break;\n    }\n    \n    else\n    {msg.payload = 4.6;\n    return msg;\n    }\n}\nmsg.payload = ObjectP;\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 380,
+        "wires": [
+            [
+                "46f726fb8317b9d6"
+            ]
+        ]
+    },
+    {
+        "id": "46f726fb8317b9d6",
+        "type": "trigger",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "num",
+        "duration": "2",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1280,
+        "y": 380,
+        "wires": [
+            [
+                "f7b6cd3ece37b8c6"
+            ]
+        ]
+    },
+    {
+        "id": "1f161edef0d9e129",
+        "type": "debug",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "644707414bdcb1bc",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "var payload = { \n    chatId: 310618835,\n    type: \"photo\",\n    caption: 'Item on conveyor = ' + msg.payload[0].class + '(Accuracy = ' + msg.payload[0].score + ')',\n    content: \"/home/pi/Pictures/FYP.jpg\" };\n    \nreturn {payload};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 220,
+        "wires": [
+            [
+                "1f161edef0d9e129",
+                "943f2f9572ceb9ca"
+            ]
+        ]
+    },
+    {
+        "id": "943f2f9572ceb9ca",
+        "type": "telegram sender",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "bot": "1b018480918e5201",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1290,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "319d4260e3bd920f",
+        "type": "usbcamera",
+        "z": "28e796fd9d3590b4",
+        "filemode": "1",
+        "filename": "FYP.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "2",
+        "name": "",
+        "x": 570,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f7d5ae0eadc410fc",
+        "type": "function",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "func": "for (let object of msg.payload) {\nif (object.class == 'Fresh Apple') {\n        \n    msg.payload.predict = msg.payload[0].score\n    break;\n    }\nelse if (object.class == 'Rotten Apple') {\n        \n    msg.payload.predict = msg.payload[0].score\n    break;\n    }\nelse if (object.class == 'Random') {\n        \n    msg.payload.predict = msg.payload[0].score\n    break;\n    }\nbreak;\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 260,
+        "wires": [
+            [
+                "d5e8dbe6845188bd",
+                "644707414bdcb1bc"
+            ]
+        ]
+    },
+    {
+        "id": "d5e8dbe6845188bd",
+        "type": "debug",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "7f41d9b6d77699ef",
+        "type": "delay",
+        "z": "28e796fd9d3590b4",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 800,
+        "y": 260,
+        "wires": [
+            [
+                "f7d5ae0eadc410fc"
+            ]
+        ]
+    },
+    {
+        "id": "c5d7e93ab51ff726",
+        "type": "influxdb",
+        "hostname": "192.168.0.134",
+        "port": "8086",
+        "protocol": "http",
+        "database": "FYP",
+        "name": "",
+        "usetls": false,
+        "tls": "d50d0c9f.31e858",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "1b018480918e5201",
+        "type": "telegram bot",
+        "botname": "SortingDetection_bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "d50d0c9f.31e858",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false
+    }
+]
