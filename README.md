@@ -17,7 +17,7 @@ The arrangement will be:
    * Smart sorting and defect detection on a conveyor belt
     
 3. Web Project
-   * Library System
+   * Library Booking System
    
    
 
